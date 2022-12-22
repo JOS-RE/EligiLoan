@@ -1,0 +1,8 @@
+# environment variables
+.env 
+
+# Byte-compiled / optimized / DLL files
+tempCodeRunnerFile.py
+__pycache__
+
+
