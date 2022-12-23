@@ -22,16 +22,16 @@ def init_req(phonenum, templateType):
     }
 
     response = requests.post(url, json=body, headers=headers)  
+    print(response.json())
     referenceId = response.json()["referenceId"]
-    return referenceId,response 
+    print(type(referenceId))
+    return referenceId
 
 
 def fetch_data(phonenum, templateType):
     url=f"{BASE_URL}/consent/data/fetch"
-    referenceId,_=init_req(phonenum, templateType)
-
     params={
-        "referenceId":referenceId,
+        "referenceId":init_req(phonenum, templateType),
         "trackingId": os.environ.get("trackingId")
     }
     headers = {
@@ -39,7 +39,8 @@ def fetch_data(phonenum, templateType):
         "Accept": "application/json",
         "API_KEY": os.environ.get("API_KEY")
     }
-
+    print(params)
+    print(headers)
     getrequest = requests.get(url, params=params, headers=headers)
     print(getrequest)
 
@@ -47,9 +48,8 @@ def fetch_data(phonenum, templateType):
 
 def fetch_analysed_data(phonenum, templateType):
     url=f"{BASE_URL}/consent/analytics/fetch"
-    referenceId,_=init_req(phonenum, templateType)
     params={
-        "referenceId":referenceId,
+        "referenceId":init_req(phonenum, templateType),
         "trackingId": os.environ.get("trackingId")
     }
     headers = {
@@ -61,6 +61,3 @@ def fetch_analysed_data(phonenum, templateType):
     getanalysedrequest = requests.get(url, params=params, headers=headers)
 
     return getanalysedrequest.json()
-
-data=fetch_data("9205231677", "ONETIME")
-print(data)
