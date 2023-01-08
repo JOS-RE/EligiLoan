@@ -2,3 +2,4 @@ python-dotenv
 requests
 fastapi
 Jinja2
+Streamlit
