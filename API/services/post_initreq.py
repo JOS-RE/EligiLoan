@@ -61,3 +61,11 @@ def fetch_analysed_data(phonenum, templateType):
     getanalysedrequest = requests.get(url, params=params, headers=headers)
 
     return getanalysedrequest.json()
+
+# req=init_req("9205231677","ONETIME")
+# # print(req)
+# req=init_req("9205231677","ONETIME")
+# print(req)
+data=fetch_data("9205231677","ONETIME")
+print(data)
+
