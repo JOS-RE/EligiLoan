@@ -23,7 +23,7 @@ class LoanModel(nn.Module):
     out = self.linear2(out)
     out = F.tanh(out)
     out = self.linear3(out)
-    out=F.sigmoid(out)
+    out=torch.sigmoid(out)
     return out
 
 class LoanDefaultPrediction(nn.Module):

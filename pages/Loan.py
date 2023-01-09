@@ -233,6 +233,6 @@ if st.button('Check my chances'):
         time.sleep(2)
         prediction=LoanDefaultPrediction.predict(torch.tensor([[loan_amount,Funded_Amount,Funded_amount_invester,Term,expected_interest_rate,mortgage_value,veri_status_mapping[verification_status],income_to_debt_ratio,delinquency,enquires,active_loans,revolving_balance,revolving_utilization,Total_Accounts,Initial_List_Status_mapping[Initial_List_Status],interest_repaid,late_payment,recoveries,collection_recovery_fee,revolving_credit_limit,loans_repaid,current_loan_amount]],dtype=torch.float32),model)
 
-        st.success('Your chances of loan default are {}'.format(LABEL_DICT[prediction.item()]))
+        st.success(f'With the current details that you have furnished, unfortunitely you are {LABEL_DICT[prediction.item()]} for Loan')
 
 
