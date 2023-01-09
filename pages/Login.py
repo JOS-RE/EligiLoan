@@ -1,4 +1,12 @@
 import streamlit as st
+from PIL import Image 
+
+image2=Image.open('assets/logo2.png')
+st.set_page_config(
+    page_title="Login",
+    page_icon=image2,
+)
+
 
 from API.utils.post_initreq import init_req, fetch_data, fetch_analysed_data
 
@@ -26,4 +34,4 @@ with col11:
                         </a>
                         ''',
                         unsafe_allow_html=True
-                    )
+                    )       
