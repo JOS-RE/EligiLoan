@@ -14,7 +14,7 @@ st.write("# Welcome to Eligiloan! 👋")
 
 with st.sidebar:
     st.write(f'''
-                        <a target="blank" href="API/services/eda.html">
+                        <a target="blank" href="https://eligiloan-eda.vercel.app/">
                             <button style=" border-color: orange; padding:10px 20px;   background-color: #fa6400f0; color:white;  border: none;  border-radius: .25rem;" >
                                 View EDA report
                             </button>
