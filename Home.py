@@ -8,9 +8,20 @@ st.set_page_config(
 )
 
 image = Image.open('assets/poster.jpg')
-st.image(image, caption='ELIGILOAN SUIIIIIIIIII')
+st.image(image, caption='ELIGILOAN')
 st.write("# Welcome to Eligiloan! 👋")
 
+
+with st.sidebar:
+    st.write(f'''
+                        <a target="blank" href="API/services/eda.html">
+                            <button style=" border-color: orange; padding:10px 20px;   background-color: #fa6400f0; color:white;  border: none;  border-radius: .25rem;" >
+                                Go to accept consent
+                            </button>
+                        </a>
+                        ''',
+                        unsafe_allow_html=True
+                    ) 
 
 
 
