@@ -37,7 +37,7 @@ class LoanDefaultPrediction(nn.Module):
     @staticmethod
     def load_model():
         model=LoanDefaultPrediction.Net()
-        state_dict=torch.load(LoanDefaultPrediction.__model_path)
+        state_dict=torch.load(LoanDefaultPrediction.__model_path,map_location=torch.device('cpu'))
         model.load_state_dict(state_dict)
         return model  
 
