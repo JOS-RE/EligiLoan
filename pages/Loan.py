@@ -6,6 +6,8 @@ import time
 import numpy as np
 
 LABEL_DICT={0:'Not Eligible',1:'Eligible'}
+veri_status_mapping={'Not Verified':0,'Verified':1,'Source Verified':2}
+Initial_List_Status_mapping={'w':0,'f':1}
 # -------------------------------------------------------------------------------
 
 st.title('Welcome to Eligiloan 🏦')
@@ -98,6 +100,11 @@ interest_repaid = st.number_input(
     'What is the interest amount of your previous loan',
     0,
     help='Please enter the interest amount of your previous loan'
+)
+
+recoveries = st.number_input(
+    'What is your recoveries',
+    0
 )
 
 # 10 "  "   "  repaied in recoveries and collection recovery fees
@@ -216,7 +223,6 @@ with col22222:
         10,
         help='Please enter the percentage of your late payments in the last 2 years'
     )
-    print(type(ld2))
 
 # Now add a submit button to the form:
 if st.button('Check my chances'):
@@ -225,9 +231,8 @@ if st.button('Check my chances'):
     model=LoanDefaultPrediction.load_model()
     with st.spinner('Predicting your chances of loan default...'):
         time.sleep(2)
-        prediction=LoanDefaultPrediction.predict(torch.tensor([[income_to_debt_ratio, mortgage_value, active_loans, current_loan_amount, loans_repaid, interest_repaid, collection_recovery_fee, Funded_Amount, Funded_amount_invester, Term, Total_Accounts, Loan_status, revolving_balance, revolving_utilization, revolving_credit_limit, enquires, delinquency, late_payment
-        
-        ]],dtype=torch.float32),model)
-        st.success('Your chances of loan default are {}'.format(LABEL_DICT[prediction[0]]))
+        prediction=LoanDefaultPrediction.predict(torch.tensor([[loan_amount,Funded_Amount,Funded_amount_invester,Term,expected_interest_rate,mortgage_value,veri_status_mapping[verification_status],income_to_debt_ratio,delinquency,enquires,active_loans,revolving_balance,revolving_utilization,Total_Accounts,Initial_List_Status_mapping[Initial_List_Status],interest_repaid,late_payment,recoveries,collection_recovery_fee,revolving_credit_limit,loans_repaid,current_loan_amount]],dtype=torch.float32),model)
+
+        st.success('Your chances of loan default are {}'.format(LABEL_DICT[prediction.item()]))
 
 

@@ -5,6 +5,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+def to_device(data, device):
+    if isinstance(data, (list,tuple)):
+        return [to_device(x, device) for x in data]
+    return data.to(device, non_blocking=True)
+
 class LoanModel(nn.Module):
   def __init__(self,in_size,out_size):
     super().__init__()
@@ -26,26 +31,19 @@ class LoanDefaultPrediction(nn.Module):
 
     @st.cache(allow_output_mutation=True)
     def Net():
-        model=LoanModel(22,1)
+        model=to_device(LoanModel(22,1),'cpu')
         return model
 
     @staticmethod
     def load_model():
         model=LoanDefaultPrediction.Net()
-        state_dict=torch.load(LoanDefaultPrediction.__model_path,map_location='cpu')
-        model=model.load_state_dict(state_dict)
-        return model
-
-    @staticmethod
-    def to_device(data, device):
-        if isinstance(data, (list,tuple)):
-            return [to_device(x, device) for x in data]
-        return data.to(device, non_blocking=True)    
+        state_dict=torch.load(LoanDefaultPrediction.__model_path)
+        model.load_state_dict(state_dict)
+        return model  
 
     @staticmethod
     def predict(x,model):
-        x=torch.tensor(x,dtype=torch.float32)
-        xb=LoanDefaultPrediction.to_device(x.unsqueeze(0),'cpu')
+        xb=to_device(x.unsqueeze(0),'cpu')
         yb=model(xb)
         _,preds=torch.max(yb,dim=1)
         return preds   

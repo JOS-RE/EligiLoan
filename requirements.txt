@@ -1,5 +1,4 @@
+pip3 install torch torchvision torchaudio
 python-dotenv
 requests
-fastapi
-Jinja2
 Streamlit
