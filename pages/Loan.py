@@ -6,21 +6,22 @@ import streamlit as st
 
 # -------------------------------------------------------------------------------
 
-
-# 1 loan amount
-la1 = st.number_input(
-  'Please enter the Loan amount you want',
-  0,
-  help='Help message goes here'
-)
-
-
-# 2 expected interest rate
-la2 = st.number_input(
-    'Expected interest rate',
+col1, col2 = st.columns(2)
+with col1:
+    # 1 loan amount
+    la1 = st.number_input(
+    'Please enter the Loan amount you want',
     0,
-    help='Please enter the interest rate you wish to pay'
-)
+    help='Help message goes here'
+    )
+
+with col2:
+    # 2 expected interest rate
+    la2 = st.number_input(
+        'Expected interest rate',
+        0,
+        help='Please enter the interest rate you wish to pay'
+    )
 
 
 # 3 current monthly income thats is already being deducted from your salary
@@ -32,36 +33,45 @@ la3 = st.slider(
     help='Please enter the percentage of your income that is already being deducted from your salary'
 )
 
-# 4 property verification status
-la4 = st.selectbox(
-    'Please confirm your property verification status by dragging the slider',
-    options=('Not Verified', 'Verified', 'Source Verified'),
-    help='Please select the option that best describes your property verification status'
+col11, col22 = st.columns(2)
+
+with col11:
+    # 4 property verification status
+    la4 = st.selectbox(
+        'Please confirm your property verification status',
+        options=('Not Verified', 'Verified', 'Source Verified'),
+        help='Please select the option that best describes your property verification status'
+        )
+
+with col22:
+    # 5 property mortgage value
+    la5 = st.number_input(
+        'Property mortgage value',
+        0,
+        help='Please enter the mortgage value of your verified property'
     )
 
-# 5 property mortgage value
-la5 = st.number_input(
-    'Property mortgage value',
-    0,
-    help='Please enter the mortgage value of your verified property'
-)
-
 # ------------------------------
+st.subheader('\n')
+st.subheader(':red[Perfect !] We are almost done. Just 2 more questions')
 
-# 6 how many active loans you have
+col111, col222 = st.columns(2)
 
-lb1 = st.number_input(
-    'How many active loans do you have',
-    0,
-    help='Please enter the number of active loans you have'
-)
+with col111:
+    # 6 how many active loans you have
+    lb1 = st.number_input(
+        'How many active loans do you have',
+        0,
+        help='Please enter the number of active loans you have'
+    )
 
-# 7 what range is your current loan amount 
-lb2 = st.number_input(
-    'What is your existing loan amount',
-    0,
-    help='Please enter the range of your current loan amount'
-)
+with col222:
+    # 7 what range is your current loan amount 
+    lb2 = st.number_input(
+        'What is your existing loan amount',
+        0,
+        help='Please enter the range of your current loan amount'
+    )
 
 # 8 "  "   "  have you repaid your previous loan
 lb3 = st.slider( 
@@ -112,27 +122,31 @@ lc4 = st.slider(
 
 st.subheader(':red[Perfect !] We are almost done. Just 2 more questions')
 
-# 15 delinquency status in last 2 years
+col11111, col22222 = st.columns(2)
 
-ld1 = st.slider(
-    'What is your delinquency rate in last 2 years',
-    0,
-    10,
-    1,
-    help='Please enter the number of times you have been delinquent in the last 2 years'
-)
+with col11111:
+    # 15 delinquency status in last 2 years
+    ld1 = st.slider(
+        'What is your delinquency rate in last 2 years',
+        0,
+        10,
+        1,
+        help='Please enter the number of times you have been delinquent in the last 2 years'
+    )
 
 
 
-# 16 late payment status in last 2 years
-ld2 = st.slider(
-    'What is your late payment percentage in last 2 years',
-    0,
-    100,
-    10,
-    help='Please enter the percentage of your late payments in the last 2 years'
-)
+with col22222:
+    # 16 late payment status in last 2 years
+    ld2 = st.slider(
+        'What is your late payment percentage',
+        0,
+        100,
+        10,
+        help='Please enter the percentage of your late payments in the last 2 years'
+    )
 
 # Now add a submit button to the form:
 if st.button('Check my chances'):
     st.write('lmao ... dekh kya raha hai ... nai milega loan tujhe')
+
