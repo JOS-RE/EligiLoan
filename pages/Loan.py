@@ -1,5 +1,11 @@
 import streamlit as st
+from API.services.loadModel import LoanDefaultPrediction
 
+import torch
+import time
+import numpy as np
+
+LABEL_DICT={0:'Not Eligible',1:'Eligible'}
 # -------------------------------------------------------------------------------
 
 st.title('Welcome to Eligiloan 🏦')
@@ -168,8 +174,16 @@ with col22222:
         10,
         help='Please enter the percentage of your late payments in the last 2 years'
     )
+    print(type(ld2))
 
 # Now add a submit button to the form:
 if st.button('Check my chances'):
-    st.write('lmao ... dekh kya raha hai ... nai milega loan tujhe')
+    st.write('Thank you')
+
+    model=LoanDefaultPrediction.load_model()
+    with st.spinner('Predicting your chances of loan default...'):
+        time.sleep(2)
+        prediction=LoanDefaultPrediction.predict(torch.tensor([[la1,la2,la3,la4,la5,lb1,lb2,lb3,lb4,lb5,lc1,lc2,lc3,lc4,ld1,ld2]],dtype=torch.float32),model)
+        st.success('Your chances of loan default are {}'.format(LABEL_DICT[prediction[0]]))
+
 
