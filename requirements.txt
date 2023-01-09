@@ -1,4 +1,6 @@
-pip3 install torch torchvision torchaudio
+torch 
+torchvision 
+torchaudio
 python-dotenv
 requests
 Streamlit
