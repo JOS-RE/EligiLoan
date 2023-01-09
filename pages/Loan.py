@@ -2,8 +2,10 @@ import streamlit as st
 
 # -------------------------------------------------------------------------------
 
+st.title('Welcome to Eligiloan 🏦')
+# orange text
 
-
+st.subheader('We are here to help you get the best loan counseling')
 # -------------------------------------------------------------------------------
 
 col1, col2 = st.columns(2)
@@ -52,8 +54,9 @@ with col22:
     )
 
 # ------------------------------
-st.subheader('\n')
-st.subheader(':red[Perfect !] We are almost done. Just 2 more questions')
+st.subheader('Now let us look at your past performance to give you :orange[more personalised results]')
+# ------------------------------
+
 
 col111, col222 = st.columns(2)
 
@@ -99,6 +102,9 @@ lb5 = st.number_input(
 )
 
 # ------------------------------
+st.subheader('We :orange[totally believe you]! We just need a few more things to give you the most accurate results.')
+# ------------------------------
+
 
 # 11 range of revolving balance
 lc1 = st.number_input(
@@ -107,9 +113,26 @@ lc1 = st.number_input(
     help='Please enter your existing revolving balance')
     # write help string
 
-# 12 range of revolving utilization
 
-# 13 range of revolving credit limit
+col1111, col2222 = st.columns(2)
+
+with col1111:
+    # 12 range of revolving utilization
+    lc2 = st.slider(
+        'What is your revolving utilization',
+        0,
+        100,
+        10,
+        help='Please enter the percentage of your revolving utilization'
+    )
+
+with col2222:
+    # 13 range of revolving credit limit
+    lc3 = st.number_input(
+        'What is your revolving credit limit',
+        0,
+        help='Please enter the range of your revolving credit limit'
+    )
 
 # 14 times had to face enquires from bank
 lc4 = st.slider(
@@ -120,7 +143,7 @@ lc4 = st.slider(
 )
 # ------------------------------
 
-st.subheader(':red[Perfect !] We are almost done. Just 2 more questions')
+st.subheader(':orange[Perfect !] We are almost done. Just 2 more questions')
 
 col11111, col22222 = st.columns(2)
 
