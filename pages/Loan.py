@@ -17,7 +17,7 @@ st.subheader('We are here to help you get the best loan counseling')
 col1, col2 = st.columns(2)
 with col1:
     # 1 loan amount
-    la1 = st.number_input(
+    loan_amount = st.number_input(
     'Please enter the Loan amount you want',
     0,
     help='Help message goes here'
@@ -25,7 +25,7 @@ with col1:
 
 with col2:
     # 2 expected interest rate
-    la2 = st.number_input(
+    expected_interest_rate = st.number_input(
         'Expected interest rate',
         0,
         help='Please enter the interest rate you wish to pay'
@@ -33,7 +33,7 @@ with col2:
 
 
 # 3 current monthly income thats is already being deducted from your salary
-la3 = st.slider(
+income_to_debt_ratio = st.slider(
     'Please enter the percentage income to debt ratio',
     0,
     100,
@@ -45,7 +45,7 @@ col11, col22 = st.columns(2)
 
 with col11:
     # 4 property verification status
-    la4 = st.selectbox(
+    verification_status = st.selectbox(
         'Please confirm your property verification status',
         options=('Not Verified', 'Verified', 'Source Verified'),
         help='Please select the option that best describes your property verification status'
@@ -53,7 +53,7 @@ with col11:
 
 with col22:
     # 5 property mortgage value
-    la5 = st.number_input(
+    mortgage_value = st.number_input(
         'Property mortgage value',
         0,
         help='Please enter the mortgage value of your verified property'
@@ -68,7 +68,7 @@ col111, col222 = st.columns(2)
 
 with col111:
     # 6 how many active loans you have
-    lb1 = st.number_input(
+    active_loans = st.number_input(
         'How many active loans do you have',
         0,
         help='Please enter the number of active loans you have'
@@ -76,32 +76,32 @@ with col111:
 
 with col222:
     # 7 what range is your current loan amount 
-    lb2 = st.number_input(
+    current_loan_amount = st.number_input(
         'What is your existing loan amount',
         0,
         help='Please enter the range of your current loan amount'
     )
 
 # 8 "  "   "  have you repaid your previous loan
-lb3 = st.slider( 
+loans_repaid = st.slider( 
     'What percentage of your previous loan have you repaid',
     0,
     100,
     10,
     help='Please enter the percentage of your previous loan that you have repaid'
 )
-lb3 = lb2 * lb3 / 100
+loans_repaid = loans_repaid/100 * current_loan_amount
 
 # 9 "  "   "  have you repaid your previous interest
 
-lb4 = st.number_input(
+interest_repaid = st.number_input(
     'What is the interest amount of your previous loan',
     0,
     help='Please enter the interest amount of your previous loan'
 )
 
 # 10 "  "   "  repaied in recoveries and collection recovery fees
-lb5 = st.number_input(
+collection_recovery_fee = st.number_input(
     'What is the recoveries and collection recovery fees of your previous loan',
     0,
     help='Please enter the recoveries and collection recovery fees of your previous loan'
@@ -111,9 +111,51 @@ lb5 = st.number_input(
 st.subheader('We :orange[totally believe you]! We just need a few more things to give you the most accurate results.')
 # ------------------------------
 
+# number input for 'Funded Amount', 'Funded Amount Investor', 'Term', 'Initial List Status', 'Total Accounts', 'Loan Status'
+
+Funded_Amount = st.number_input(
+    'Please enter your Funded Amount',
+    0,
+    help='Please enter your Funded Amount'
+)
+
+Funded_amount_invester = st.number_input(
+    'Please enter your Funded Amount Investor',
+    0,
+    help='Please enter your Funded Amount Investor'
+)
+
+Term = st.slider(
+    'Please enter your Term',
+    0,
+    100,
+    10,
+    help='Please enter your Term'
+)
+
+Initial_List_Status = st.selectbox(
+    'Please select your Initial List Status',
+    options=('f', 'w'),
+    help='Please select your Initial List Status'
+)
+
+Total_Accounts = st.number_input(
+    'Please enter your Total Accounts',
+    0,
+    help='Please enter your Total Accounts'
+)
+
+# 0, 1 slider for loan status
+Loan_status = st.slider(
+    'Please enter your loan status',
+    0,
+    1,
+    0,
+    help='Please enter your loan status'
+)
 
 # 11 range of revolving balance
-lc1 = st.number_input(
+revolving_balance = st.number_input(
     'Please enter your existing revolving balance',
     0,
     help='Please enter your existing revolving balance')
@@ -124,7 +166,7 @@ col1111, col2222 = st.columns(2)
 
 with col1111:
     # 12 range of revolving utilization
-    lc2 = st.slider(
+    revolving_utilization = st.slider(
         'What is your revolving utilization',
         0,
         100,
@@ -134,14 +176,14 @@ with col1111:
 
 with col2222:
     # 13 range of revolving credit limit
-    lc3 = st.number_input(
+    revolving_credit_limit = st.number_input(
         'What is your revolving credit limit',
         0,
         help='Please enter the range of your revolving credit limit'
     )
 
 # 14 times had to face enquires from bank
-lc4 = st.slider(
+enquires = st.slider(
     'How many times did you overcome enquires from the bank',
     0,
     10,
@@ -155,7 +197,7 @@ col11111, col22222 = st.columns(2)
 
 with col11111:
     # 15 delinquency status in last 2 years
-    ld1 = st.slider(
+    delinquency = st.slider(
         'What is your delinquency rate in last 2 years',
         0,
         10,
@@ -167,7 +209,7 @@ with col11111:
 
 with col22222:
     # 16 late payment status in last 2 years
-    ld2 = st.slider(
+    late_payment = st.slider(
         'What is your late payment percentage',
         0,
         100,
@@ -183,7 +225,9 @@ if st.button('Check my chances'):
     model=LoanDefaultPrediction.load_model()
     with st.spinner('Predicting your chances of loan default...'):
         time.sleep(2)
-        prediction=LoanDefaultPrediction.predict(torch.tensor([[la1,la2,la3,la4,la5,lb1,lb2,lb3,lb4,lb5,lc1,lc2,lc3,lc4,ld1,ld2]],dtype=torch.float32),model)
+        prediction=LoanDefaultPrediction.predict(torch.tensor([[income_to_debt_ratio, mortgage_value, active_loans, current_loan_amount, loans_repaid, interest_repaid, collection_recovery_fee, Funded_Amount, Funded_amount_invester, Term, Total_Accounts, Loan_status, revolving_balance, revolving_utilization, revolving_credit_limit, enquires, delinquency, late_payment
+        
+        ]],dtype=torch.float32),model)
         st.success('Your chances of loan default are {}'.format(LABEL_DICT[prediction[0]]))
 
 
